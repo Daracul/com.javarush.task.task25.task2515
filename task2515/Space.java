@@ -84,6 +84,9 @@ public class Space {
      * Двигаем все объекты игры
      */
     public void moveAllItems() {
+        for (BaseObject object:getAllItems()){
+            object.move();
+        }
         //нужно получить список всех игрвых объектов и у каждого вызвать метод move().
     }
 
@@ -91,6 +94,18 @@ public class Space {
      * Метод возвращает общий список, который содержит все объекты игры
      */
     public List<BaseObject> getAllItems() {
+        List<BaseObject> allItems = new ArrayList<>();
+        allItems.add(ship);
+        for (Ufo ufo:ufos){
+            allItems.add(ufo);
+        }
+        for (Bomb bomb:bombs){
+            allItems.add(bomb);
+        }
+        for (Rocket rocket:rockets){
+            allItems.add(rocket);
+        }
+        return allItems;
         //нужно создать новый список и положить в него все игровые объекты.
     }
 
