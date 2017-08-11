@@ -12,7 +12,7 @@ public class Canvas {
     public Canvas(int width, int height) {
         this.width = width;
         this.height = height;
-        this.matrix=new char[height][width];
+        this.matrix=new char[height+2][width+2];
     }
 
     public int getWidth() {
@@ -27,4 +27,26 @@ public class Canvas {
     public char[][] getMatrix() {
         return matrix;
     }
+
+    public void setPoint(double x, double y, char c){
+        int xR = (int)Math.round(x);
+        int yR = (int)Math.round(y);
+        if (xR<0||yR<0||yR>matrix.length||xR>matrix[0].length){
+
+        }
+        else {
+            matrix[yR][(xR)]=c;
+        }
+    }
+    public void drawMatrix(double x, double y, int[][] matrix, char c){
+        for (int i=0;i<matrix.length;i++){
+            for (int j=0;j<matrix[0].length;j++){
+                if (matrix[i][j]!=0){
+                   setPoint(x+j,y+i,c);
+                }
+            }
+        }
+    }
+
+
 }
