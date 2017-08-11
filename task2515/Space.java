@@ -113,6 +113,9 @@ public class Space {
      * Создаем новый НЛО. 1 раз на 10 вызовов.
      */
     public void createUfo() {
+        if (ufos.isEmpty()){
+            ufos.add(new Ufo(getWidth()/2,getHeight()));
+        }
         //тут нужно создать новый НЛО.
         //1 раз за 10 вызовов метода.
     }
@@ -124,6 +127,15 @@ public class Space {
      */
     public void checkBombs() {
         //тут нужно проверить все возможные столкновения для каждой бомбы.
+        for (Bomb bomb:bombs){
+            if (bomb.isIntersect(ship)){
+                ship.die();
+                bomb.die();
+            }
+            if (bomb.getY()<0||bomb.getY()>height){
+                bomb.die();
+            }
+        }
     }
 
     /**
@@ -132,6 +144,17 @@ public class Space {
      * б) вылет выше края игрового поля (ракета умирает)
      */
     public void checkRockets() {
+        for (Rocket rocket:rockets){
+            for (Ufo ufo:ufos){
+                if (rocket.isIntersect(ufo)){
+                    ufo.die();
+                    rocket.die();
+                }
+            }
+            if (rocket.getY()<0||rocket.getY()>height||rocket.getX()<0||rocket.getX()>width){
+                rocket.die();
+            }
+        }
         //тут нужно проверить все возможные столкновения для каждой ракеты.
     }
 
@@ -141,6 +164,21 @@ public class Space {
     public void removeDead() {
         //тут нужно удалить все умершие объекты из списков.
         //Кроме космического корабля - по нему определяем ищет еще игра или нет.
+        for (int i=ufos.size()-1;i>=0;i--){
+            if (ufos.get(i).isAlive()==false){
+                ufos.remove(ufos.get(i));
+            }
+        }
+        for (int i=rockets.size()-1;i>=0;i--){
+            if (rockets.get(i).isAlive()==false){
+                rockets.remove(rockets.get(i));
+            }
+        }
+        for (int i=bombs.size()-1;i>=0;i--){
+            if (bombs.get(i).isAlive()==false){
+                bombs.remove(bombs.get(i));
+            }
+        }
     }
 
     /**
